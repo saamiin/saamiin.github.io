@@ -10,11 +10,12 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+/* styles.css (請用這個區塊替換掉您原有的 :root 區塊) */
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
   --bs-purple: #6f42c1;
-  --bs-pink: #d63384;
+  --bs-pink: #d63384; /* 原本的 pink 可以保留 */
   --bs-red: #dc3545;
   --bs-orange: #bd5d38;
   --bs-yellow: #ffc107;
@@ -34,7 +35,9 @@
   --bs-gray-700: #495057;
   --bs-gray-800: #343a40;
   --bs-gray-900: #212529;
-  --bs-primary: #bd5d38;
+
+  /* ***** 主色 (Primary) 改為 #ff79c9 (鮮豔粉紅) ***** */
+  --bs-primary: #ff79c9; 
   --bs-secondary: #6c757d;
   --bs-success: #198754;
   --bs-info: #0dcaf0;
@@ -42,7 +45,8 @@
   --bs-danger: #dc3545;
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
-  --bs-primary-rgb: 189, 93, 56;
+
+  --bs-primary-rgb: 255, 121, 201; /* 新主色的 RGB 值 */
   --bs-secondary-rgb: 108, 117, 125;
   --bs-success-rgb: 25, 135, 84;
   --bs-info-rgb: 13, 202, 240;
@@ -50,6 +54,7 @@
   --bs-danger-rgb: 220, 53, 69;
   --bs-light-rgb: 248, 249, 250;
   --bs-dark-rgb: 33, 37, 41;
+
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 33, 37, 41;
@@ -73,8 +78,10 @@
   --bs-border-radius-xl: 1rem;
   --bs-border-radius-2xl: 2rem;
   --bs-border-radius-pill: 50rem;
-  --bs-link-color: #bd5d38;
-  --bs-link-hover-color: #974a2d;
+
+  --bs-link-color: #ff79c9; /* 連結顏色改為新主色 */
+  --bs-link-hover-color: #e652a9; /* 連結滑鼠懸停顏色 (稍微暗一點的粉紅) */
+
   --bs-code-color: #d63384;
   --bs-highlight-bg: #fff3cd;
 }
@@ -10969,4 +10976,337 @@ section.resume-section .resume-section-content {
     padding-top: 5rem;
     padding-bottom: 5rem;
   }
+}
+
+/* styles.css (新增到文件末尾) */
+
+/* 1. 滾動容器設定 (實現左右滾動的關鍵) */
+.custom-carousel-container {
+    display: flex; /* 使用 Flexbox 讓所有作品卡片排成一列 */
+    overflow-x: auto; /* 啟用水平滾動條 */
+    scroll-snap-type: x mandatory; /* 讓滾動在每個作品卡片處停止 */
+    padding-bottom: 20px; /* 增加底部內邊距，避免滾動條太貼近內容 */
+}
+
+/* 隱藏滾動條 (可選，讓畫面更簡潔) */
+.custom-carousel-container::-webkit-scrollbar {
+    display: none; /* 隱藏 Chrome, Safari, Opera 的滾動條 */
+}
+.custom-carousel-container {
+    -ms-overflow-style: none;  /* 隱藏 IE 和 Edge 的滾動條 */
+    scrollbar-width: none;  /* 隱藏 Firefox 的滾動條 */
+}
+
+/* 2. 作品卡片樣式設定 */
+.carousel-item-card {
+    /* 確保每個卡片佔據固定的寬度 */
+    flex: 0 0 320px; /* 寬度 320px，不允許縮小或放大 */
+    margin-right: 1.5rem; /* 卡片之間的間距 */
+    scroll-snap-align: start; /* 滾動時對齊卡片起始位置 */
+    background-color: var(--bs-white); /* 白色背景 */
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* 輕微陰影，增加立體感 */
+    overflow: hidden; /* 確保圓角效果良好 */
+    transition: transform 0.2s;
+}
+
+/* 3. 封面圖片樣式 */
+.project-cover {
+    width: 100%;
+    height: 200px; /* 設定固定的封面高度 */
+    object-fit: cover; /* 確保圖片不變形填滿空間 */
+    display: block;
+}
+
+/* 4. 作品資訊文字樣式 */
+.card-body {
+    padding: 1rem;
+}
+
+/* 滑鼠懸停效果 (可選) */
+.carousel-item-card:hover {
+    transform: translateY(-5px); /* 向上抬升，增加互動感 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* styles.css (請替換/新增以下程式碼到文件末尾) */
+
+/* 技能長條圖列表容器 */
+.skill-bar-list {
+    max-width: 900px; 
+    margin-bottom: 2rem;
+}
+
+/* 單一技能項目：使用 Flexbox 讓名稱和長條圖在同一行對齊 */
+.skill-item {
+    display: flex;
+    align-items: center; /* 垂直置中對齊 */
+    margin-bottom: 1rem;
+}
+
+/* 技能名稱 (對齊的關鍵) */
+.skill-name {
+    /* 增大 min-width 到 180px，確保所有技能名稱對齊，長條圖從同一個起點開始 */
+    min-width: 180px; 
+    font-weight: 700;
+    color: var(--bs-gray-dark);
+    margin-right: 1.5rem; 
+}
+
+/* Bootstrap Progress Bar 容器 */
+.progress {
+    flex-grow: 1; /* 讓進度條佔據剩餘的所有空間 */
+    height: 1.5rem; 
+    background-color: var(--bs-gray-200); 
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+/* 進度條本身 */
+.progress-bar {
+    color: var(--bs-white); 
+    font-size: 0.9rem;
+    line-height: 1.5rem; 
+    text-align: right; /* 百分比數字靠右 */
+    padding-right: 0.5rem; 
+}
+/* styles.css (新增到文件末尾) */
+
+/* styles.css */
+
+/* 2. 每個圖片項目的樣式 (修正為 a 標籤) */
+.grid-item {
+    position: relative;
+    overflow: hidden;
+    /* 確保圖片是正方形 (3x3 佈局下，高寬比例為 1:1) */
+    padding-bottom: 100%; 
+    height: 0;
+    cursor: pointer;
+    display: block; /* 讓 a 標籤佔據整個 grid 空間 */
+    text-decoration: none; /* 移除連結下劃線 */
+    color: inherit; /* 繼承文字顏色 */
+}
+/* 其他 .grid-item 相關的 img 和 overlay 樣式保持不變 */
+
+/* styles.css (請替換/新增以下程式碼到文件末尾) */
+
+/* 1. Masonry 容器設定 (實現不規則網格的關鍵) */
+.masonry-grid-container {
+    /* 將內容分為 3 欄 */
+    column-count: 3; 
+    /* 欄與欄之間的間距 */
+    column-gap: 10px; 
+    max-width: 900px; /* 限制最大寬度 */
+    margin: 0 auto; /* 置中 */
+}
+
+/* 2. 每個圖片項目 (grid-item) 的樣式 */
+.masonry-grid-container .grid-item {
+    display: inline-block; /* 讓圖片項目能跨欄排列 */
+    width: 100%; /* 每個圖片項目佔滿其所在欄的寬度 */
+    margin-bottom: 10px; /* 圖片之間的垂直間距 */
+    break-inside: avoid-column; /* 防止圖片在中間被截斷 */
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none; /* 移除連結下劃線 */
+    color: inherit; /* 繼承文字顏色 */
+}
+
+.masonry-grid-container .grid-item img {
+    width: 100%;
+    height: auto; /* 高度自動，保持圖片比例 */
+    display: block;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* 3. 圖片懸停效果 (放大) */
+.masonry-grid-container .grid-item:hover img {
+    transform: scale(1.05);
+}
+
+/* 4. 圖片上的文字疊層 (overlay) */
+.masonry-grid-container .grid-item .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px;
+    font-size: 0.8rem;
+    text-align: center;
+    transform: translateY(100%); 
+    transition: transform 0.3s ease-in-out;
+}
+
+/* 懸停時顯示文字 */
+.masonry-grid-container .grid-item:hover .overlay {
+    transform: translateY(0);
+}
+
+/* 響應式調整：在小螢幕上調整欄數 */
+@media (max-width: 768px) {
+    .masonry-grid-container {
+        column-count: 2; /* 手機上顯示 2 欄 */
+        column-gap: 8px;
+    }
+    .masonry-grid-container .grid-item {
+        margin-bottom: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .masonry-grid-container {
+        column-count: 1; /* 超小螢幕上顯示 1 欄 */
+        column-gap: 5px;
+    }
+    .masonry-grid-container .grid-item {
+        margin-bottom: 5px;
+    }
+}
+/* ========================================================= */
+/* Portfolio 區塊樣式 (確保 70%/30% 比例、圖片顯示與滑動效果)   */
+/* ========================================================= */
+
+/* 確保 Portfolio 容器可以左右滾動 */
+.custom-carousel-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory; /* 讓滾動更像翻頁 */
+    -webkit-overflow-scrolling: touch; 
+    padding-bottom: 20px; 
+}
+
+/* Portfolio 封面 (單一作品頁面) 樣式 */
+.portfolio-cover {
+    flex: 0 0 100%; /* 關鍵：強制每個作品佔據容器 100% 寬度 */
+    scroll-snap-align: start; 
+    width: 100%; 
+    padding: 1rem 0;
+    box-sizing: border-box;
+    display: flex; 
+    flex-direction: column;
+}
+
+/* 封面頁容器 (Intro Cover) */
+.portfolio-intro-cover {
+    background-size: contain; 
+    background-position: center center;
+    background-repeat: no-repeat; 
+    position: relative;
+    min-height: 90vh; /* 確保足夠高度 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa; /* 淺色背景 */
+}
+
+/* 封面疊層 */
+.intro-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* 封面標題樣式 */
+.portfolio-intro-title {
+    font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #fff; 
+    font-size: 8rem; 
+    line-height: 1;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6); 
+    z-index: 2; 
+}
+.portfolio-intro-cover .lead {
+    font-size: 1.5rem;
+    z-index: 2;
+}
+
+
+/* 2. 作品頁面標題 (h3) 樣式 */
+.portfolio-cover h3 {
+    font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #343a40;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    margin-bottom: 2rem !important;
+    text-align: center;
+}
+
+/* 3. 作品媒體區 (左側圖片) - 寬度佔 70% (強制覆蓋) */
+.portfolio-media-area {
+    /* 關鍵：使用 !important 確保覆蓋 Bootstrap 的 flex-grow 設置 */
+    flex: 0 0 70% !important;
+    max-width: 70% !important;
+    
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+}
+
+/* 4. 描述區 (右側文字) - 寬度佔 30% (強制覆蓋) */
+.portfolio-description-area {
+    /* 關鍵：使用 !important 確保覆蓋 Bootstrap 的 flex-grow 設置 */
+    flex: 0 0 30% !important;
+    max-width: 30% !important;
+    
+    padding-left: 1.5rem !important; 
+    text-align: left;
+}
+
+/* 5. 作品圖片的樣式 (確保圖片最大化顯示於 70% 區域內) */
+.project-media {
+    width: auto;
+    height: auto;
+    display: block;
+    max-width: 100%; 
+    max-height: 650px; 
+    object-fit: contain; 
+    border: 1px solid #e9ecef; 
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); 
+}
+
+/* 6. 作品說明區的小標題 (h4.subheading) 樣式 */
+.portfolio-description-area h4.subheading {
+    font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #343a40 !important;
+    margin-bottom: 1rem !important;
+}
+
+/* 7. 作品簡述文字調整 */
+.portfolio-description-area p {
+    font-size: 0.95rem; 
+    line-height: 1.5;
+    margin-bottom: 0.5rem; 
+}
+
+
+/* 8. 響應式調整 (手機上仍然維持 100% 寬度) */
+@media (max-width: 768px) {
+    .portfolio-media-area,
+    .portfolio-description-area {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        text-align: center; 
+    }
 }
